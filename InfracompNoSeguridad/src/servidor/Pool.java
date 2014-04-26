@@ -3,9 +3,11 @@
  */
 package servidor;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.security.Security;
+import java.util.Properties;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -20,7 +22,12 @@ public class Pool {
 	/**
 	 * Constante que especifica el numero de threads que se usan en el pool de conexiones.
 	 */
-	public static final int N_THREADS = 20;
+	public static int n_threads;
+	
+	/**
+	 * Ubicacion del properties
+	 */
+	private static final String PROPERTIES = "./servidor.properties";
 	
 	/**
 	 * Puerto en el cual escucha el servidor.
@@ -41,9 +48,14 @@ public class Pool {
 		// Crea un semaforo que da turnos para usar el socket.
 		Semaphore semaphore = new Semaphore(1);
 		
+		// Obtiene la cantidad de threads del archivo properties
+		Properties p = new Properties();
+		p.load(new FileInputStream(PROPERTIES));
+		n_threads = Integer.parseInt(p.getProperty("n_threads"));
+		
 		// Genera n threads que correran durante la sesion.
-		ThreadServidor [] threads = new ThreadServidor[N_THREADS];
-		for ( int i = 0 ; i < N_THREADS ; i++) {
+		ThreadServidor [] threads = new ThreadServidor[n_threads];
+		for ( int i = 0 ; i < n_threads ; i++) {
 			try {
 				threads[i] = new ThreadServidor(socket , semaphore);
 			} catch (InterruptedException e) {
