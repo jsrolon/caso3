@@ -2,8 +2,9 @@ import fileinput
 import re
 import subprocess
 
-properties = './InfracompSeguridad/p.properties'
-jar = './InfracompSeguridad/servidor.jar'
+tipo = './InfracompSeguridad/'
+properties = 'servidor.properties'
+jar = 'servidor.jar'
 
 # Iterar sobre seguridad y no seguridad
 for j in range(0, 2):
@@ -12,13 +13,13 @@ for j in range(0, 2):
 	for i in range(0, 5):
 	
 		# Reemplazar la cantidad de threads para iterar
-		for line in fileinput.input(properties, inplace=True):
+		for line in fileinput.input(tipo + properties, inplace=True):
 			print(re.sub('[0-9]+$', '{}'.format(2 ** i), line), end='')
 		
 		# Ciencia, acá es lo chévere
 		for k in range(0, 50):
 			# Inicializar el servidor
-			subprocess.call(['java', '-jar', jar])
+			subprocess.call(['java', '-jar', tipo + jar])
 			
 			# Llamar al proceso remoto que inicia GLoad y recibir sus resultados
 			# debe ser síncrono
@@ -27,5 +28,4 @@ for j in range(0, 2):
 			# Apagar servidor y agrupar resultados de la prueba
 			# TODO
 		
-	properties = './InfracompNoSeguridad/p.properties'	
-	jar = './InfracompNoSeguridad/servidor.jar'
+	tipo = './InfracompNoSeguridad/'
