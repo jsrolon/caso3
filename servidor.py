@@ -19,7 +19,7 @@ for j in range(0, 2):
 		# Ciencia, acá es lo chévere
 		for k in range(0, 50):
 			# Inicializar el servidor
-			subprocess.call(['java', '-jar', tipo + jar])
+			serverProcess = subprocess.Popen(['java', '-jar', tipo + jar])
 			
 			# Llamar al proceso remoto que inicia GLoad y recibir sus resultados
 			# debe ser síncrono

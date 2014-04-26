@@ -25,9 +25,9 @@ public class Pool {
 	public static int n_threads;
 	
 	/**
-	 * Ubicacion del properties
+	 * Ubicacion del properties (debe ser relativo al Script)
 	 */
-	private static final String PROPERTIES = "./servidor.properties";
+	private static final String PROPERTIES = "./InfracompSeguridad/servidor.properties";
 	
 	/**
 	 * Puerto en el cual escucha el servidor.
