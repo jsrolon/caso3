@@ -3,5 +3,5 @@
 Thumbs.db
 
 # Cosas de Java y Eclipse
-*/bin/
-.settings/
+bin/
+**/.settings
