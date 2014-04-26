@@ -2,5 +2,6 @@
 .DS_Stores
 Thumbs.db
 
-# Cosas compiladas de Java
-*/bin
+# Cosas de Java y Eclipse
+*/bin/
+.settings/
