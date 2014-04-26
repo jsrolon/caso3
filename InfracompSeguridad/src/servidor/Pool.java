@@ -66,7 +66,8 @@ public class Pool {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("El servidor esta listo para aceptar conexiones.");
+		System.out.println("El servidor con seguridad esta listo para aceptar conexiones con "
+						+ n_threads + " threads.");
 	}
 	
 }
