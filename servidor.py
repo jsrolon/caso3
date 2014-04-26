@@ -2,7 +2,7 @@ import fileinput
 import re
 import subprocess
 
-ruta = './InfracompSeguridad/p.properties'
+properties = './InfracompSeguridad/p.properties'
 jar = './InfracompSeguridad/servidor.jar'
 
 # Iterar sobre seguridad y no seguridad
@@ -12,7 +12,7 @@ for j in range(0, 2):
 	for i in range(0, 5):
 	
 		# Reemplazar la cantidad de threads para iterar
-		for line in fileinput.input(ruta, inplace=True):
+		for line in fileinput.input(properties, inplace=True):
 			print(re.sub('[0-9]+$', '{}'.format(2 ** i), line), end='')
 		
 		# Ciencia, acá es lo chévere
@@ -27,5 +27,5 @@ for j in range(0, 2):
 			# Apagar servidor y agrupar resultados de la prueba
 			# TODO
 		
-	ruta = './InfracompNoSeguridad/p.properties'	
+	properties = './InfracompNoSeguridad/p.properties'	
 	jar = './InfracompNoSeguridad/servidor.jar'
