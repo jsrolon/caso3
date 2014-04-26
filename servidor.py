@@ -2,16 +2,17 @@ import fileinput
 import re
 import subprocess
 import time
+import paramiko
 
 tipo = './InfracompSeguridad/'
 properties = 'servidor.properties'
 jar = 'servidor.jar'
 
 # Iterar sobre seguridad y no seguridad
-for j in range(0, 2):
+for j in range(0, 1):
 
 	# Iterar sobre el número de threads
-	for i in range(0, 5):
+	for i in range(0, 1):
 	
 		# Reemplazar la cantidad de threads para iterar
 		for line in fileinput.input(tipo + properties, inplace=True):
@@ -20,7 +21,7 @@ for j in range(0, 2):
 		# Ciencia, acá es lo chévere
 		for k in range(0, 1):
 			# Inicializar el servidor
-			print("Iniciando el servidor")
+			print("SCRIPT: Iniciando el servidor...")
 			serverProcess = subprocess.Popen(['java', '-jar', tipo + jar])
 
 			# Tiempo necesario para que inicie el servidor
@@ -28,11 +29,13 @@ for j in range(0, 2):
 
 			# Llamar al proceso remoto que inicia GLoad y recibir sus resultados
 			# debe ser síncrono
-			# TODO
+			subprocess.call(['ssh', 'rlbstr@192.168.1.146', 'python3 test.py'])
 			
 			# Apagar servidor y agrupar resultados de la prueba
 			serverProcess.terminate()
-			print("servidor apagado")
+			print("SCRIPT: Servidor apagado!")
+
+			
 			time.sleep(1) # simulando tiempo de procesamiento
 		
 	tipo = './InfracompNoSeguridad/'
