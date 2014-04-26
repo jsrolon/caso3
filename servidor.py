@@ -27,15 +27,15 @@ for j in range(0, 1):
 			# Tiempo necesario para que inicie el servidor
 			time.sleep(0.4)
 
-			# Llamar al proceso remoto que inicia GLoad y recibir sus resultados
-			# debe ser síncrono
+			# Llamar al proceso remoto que inicia GLoad y luego copiar sus resultados
+			# debe ser sincrono
 			subprocess.call(['ssh', 'rlbstr@192.168.1.146', 'python3 test.py'])
 			
 			# Apagar servidor y agrupar resultados de la prueba
 			serverProcess.terminate()
 			print("SCRIPT: Servidor apagado!")
 
-			
+
 			time.sleep(1) # simulando tiempo de procesamiento
 		
 	tipo = './InfracompNoSeguridad/'
