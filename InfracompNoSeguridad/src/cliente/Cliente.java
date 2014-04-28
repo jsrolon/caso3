@@ -220,7 +220,7 @@ public class Cliente
 			ps.load(new FileInputStream(PROPERTIESSERVIDOR));
 			
 			File f;
-			f = new File("../InfracompNoSeguridad/DatossinSeguridad_"+ps.getProperty("n_threads")+"_"+pc.getProperty("number"));
+			f = new File("../InfracompNoSeguridad/DatossinSeguridad_"+ps.getProperty("n_threads")+"_"+pc.getProperty("number")+"_"+pc.getProperty("times"));
 			FileWriter w = new FileWriter(f, true);
 			BufferedWriter bw = new BufferedWriter(w);
 			PrintWriter wr = new PrintWriter(bw);
