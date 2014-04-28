@@ -1,6 +1,10 @@
 package cliente;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -20,6 +24,7 @@ import java.security.Security;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Date;
+import java.util.Properties;
 
 import javax.crypto.Cipher;
 import javax.crypto.Mac;
@@ -81,9 +86,19 @@ public class Cliente
 	public static final String SERVIDOR = "localhost";
 	
 	/**
+	 * Ubicacion del properties (debe ser relativo al Script)
+	 */
+	private static final String PROPERTIESCLIENTE = "../InfracompSeguridad/cliente.properties";
+	
+	/**
+	 * Ubicacion del properties (debe ser relativo al Script)
+	 */
+	private static final String PROPERTIESSERVIDOR = "../InfracompSeguridad/servidor.properties";
+	
+	/**
 	 * Pide parametros de consola e imprime sobre la consola.
 	 */
-	public static final boolean enPrueba = true;
+	public static final boolean enPrueba = false;
 
 	/**
 	 * Metodo main de la clase Cliente.
@@ -96,13 +111,21 @@ public class Cliente
 		// Necesario para crear llaves.
 		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());		
 		
-		cliente();
+		new Cliente().cliente();
+	}
+
+	/**
+	 * Constructor de Cliente
+	 */
+	public Cliente()
+	{
+		
 	}
 	
 	/**
 	 * Metodo que instancia un cliente.
 	 */
-	public static void cliente() {
+	public void cliente() {
 		Socket comunicacion;
 		SecretKey simetrica;
 		try
@@ -125,6 +148,9 @@ public class Cliente
 			//OUTPUT STREAM PARA MANDAR FLUJO DE BYTES DEL SERVIDOR
 			OutputStream output = comunicacion.getOutputStream();
 
+			//	Inicio del tiempo de mensaje
+			long inicio, autenticacion, envio, fin;
+			inicio = System.nanoTime();
 
 			//SE ENVIA LA IDENTIFICACION CLIENTE
 			escritor.println("INIT");
@@ -170,7 +196,7 @@ public class Cliente
 									credentials.getBytes(), simetrica, DIGEST)));
 			status = lector.readLine();
 			
-
+			autenticacion = System.nanoTime();
 
 			//SE ESPERA A QUE EL USUARIO INSERTE EL ID
 			String idP = "45856951";
@@ -178,6 +204,8 @@ public class Cliente
 				System.out.println("Ingrese la tutela a confirmar:");
 				idP = consola.readLine();
 			}
+			
+			envio = System.nanoTime();
 
 			//SE CIFRA EL INPUT DEL USUARIO
 			String idPCifrado = Transformacion.transformar(
@@ -201,6 +229,29 @@ public class Cliente
 			//boolean verificacion = verificarIntegridad(generarHMAC(respuesta,simetrica) ,digest );
 			boolean verificacion = Seguridad.verificarIntegridad(respuesta.getBytes(), simetrica, DIGEST, digest);
 
+			fin = System.nanoTime();
+			
+			//	Archivo de Escritura
+			Properties pc = new Properties();
+			pc.load(new FileInputStream(PROPERTIESCLIENTE));
+			
+			Properties ps = new Properties();
+			ps.load(new FileInputStream(PROPERTIESSERVIDOR));
+			
+			File f;
+			f = new File("../InfracompSeguridad/DatosconSeguridad_"+ps.getProperty("n_threads")+"_"+pc.getProperty("number"));
+			FileWriter w = new FileWriter(f, true);
+			BufferedWriter bw = new BufferedWriter(w);
+			PrintWriter wr = new PrintWriter(bw);
+			
+			//	Escritura
+			wr.print(( autenticacion - inicio ) +", "+ ( fin - envio )+"\n");
+//			System.out.println(( autenticacion - inicio ) +", "+ ( fin - envio ));
+			
+			//	Cierra el Archivo
+			wr.close();
+			bw.close();
+			
 			if(verificacion)
 			{
 				if (enPrueba) System.out.println("RESPUESTA RECIBIDA: "+ respuesta);
