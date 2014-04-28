@@ -9,7 +9,7 @@ import uniandes.gload.core.Task;
 
 public class Generator {
 
-	private static final String PROPERTIES = "../InfracompSeguridad/cliente.properties";
+	private static final String PROPERTIES = "./InfracompSeguridad/cliente.properties";
 	
 	private LoadGenerator generator;
 	
