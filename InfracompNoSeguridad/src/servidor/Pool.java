@@ -28,7 +28,7 @@ public class Pool {
 	/**
 	 * Ubicacion del properties (debe ser relativo al Script)
 	 */
-	private static final String PROPERTIES = "../InfracompNoSeguridad/servidor.properties";
+	private static final String PROPERTIES = "./InfracompNoSeguridad/servidor.properties";
 
 	/**
 	 * Puerto en el cual escucha el servidor.
