@@ -2,7 +2,6 @@ import fileinput
 import re
 import subprocess
 import time
-import paramiko
 
 tipo = './InfracompSeguridad/'
 properties = 'servidor.properties'
