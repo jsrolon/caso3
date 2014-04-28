@@ -1,6 +1,7 @@
 package cliente;
 
 import java.io.FileInputStream;
+import java.security.Security;
 import java.util.Properties;
 
 import uniandes.gload.core.LoadGenerator;
@@ -37,6 +38,7 @@ public class Generator {
 	
 	public static void main(String[] args)
 	{
+		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());	
 		@SuppressWarnings("unused")
 		Generator gen=new Generator();
 	}

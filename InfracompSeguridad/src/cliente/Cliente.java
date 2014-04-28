@@ -108,8 +108,7 @@ public class Cliente
 	public static void main(String args[]) throws InterruptedException
 	{
 		// Adiciona la libreria como un proveedor de seguridad.
-		// Necesario para crear llaves.
-		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());		
+		// Necesario para crear llaves.	
 		
 		new Cliente().cliente();
 	}
