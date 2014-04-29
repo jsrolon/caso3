@@ -20,7 +20,7 @@ for i in range(0, 5):
 		print(re.sub('[0-9]+$', '{}'.format(numthreads), line), end='')
 
 	# casos
-	for repeticiones in (0,10):
+	for repeticiones in range(0,10):
 		for line in fileinput.input(tipo + properties, inplace=True):
 			if 'gap=' in line:
 				print(re.sub('(gap=)[0-9]+$', 'gap={}'.format(20), line), end='')
