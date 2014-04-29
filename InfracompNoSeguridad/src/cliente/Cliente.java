@@ -1,4 +1,5 @@
 package cliente;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -47,14 +48,13 @@ import utils.Seguridad;
 import utils.Transformacion;
 
 /**
- * Esta clase implementa al cliente del servidor que se desarrollo anteriormente.
- * Infraestructura Computacional 201320
- * Universidad de los Andes.
+ * Esta clase implementa al cliente del servidor que se desarrollo
+ * anteriormente. Infraestructura Computacional 201320 Universidad de los Andes.
  * Las tildes han sido eliminadas por cuestiones de compatibilidad.
+ * 
  * @author Michael Andres Carrillo Pinzon
  */
-public class Cliente 
-{
+public class Cliente {
 	/**
 	 * Algoritmo asimetrico.
 	 */
@@ -64,16 +64,16 @@ public class Cliente
 	 * Algoritmo de generacion codigos HMAC.
 	 */
 	private final static String DIGEST = "HMACMD5";
-	//private final static String DIGEST = "HMACSHA1";
-	//private final static String DIGEST = "HMACSHA256";
+	// private final static String DIGEST = "HMACSHA1";
+	// private final static String DIGEST = "HMACSHA256";
 
 	/**
 	 * Algoritmo simetrico.
 	 */
 	private final static String SIMETRICO = "AES";
-	//private final static String SIMETRICO = "DES";
-	//private final static String SIMETRICO = "RC4";
-	//private final static String SIMETRICO = "Blowfish";
+	// private final static String SIMETRICO = "DES";
+	// private final static String SIMETRICO = "RC4";
+	// private final static String SIMETRICO = "Blowfish";
 
 	/**
 	 * Puerto al cual se va a comunicar.
@@ -89,12 +89,12 @@ public class Cliente
 	 * Ubicacion del properties (debe ser relativo al Script)
 	 */
 	private static final String PROPERTIESCLIENTE = "../InfracompNoSeguridad/cliente.properties";
-	
+
 	/**
 	 * Ubicacion del properties (debe ser relativo al Script)
 	 */
 	private static final String PROPERTIESSERVIDOR = "../InfracompNoSeguridad/servidor.properties";
-	
+
 	/**
 	 * Pide parametros de consola e imprime sobre la consola.
 	 */
@@ -102,14 +102,16 @@ public class Cliente
 
 	/**
 	 * Metodo main de la clase Cliente.
-	 * @param args Los argumentos del cliente.
-	 * @throws InterruptedException Si hubo problemas.
+	 * 
+	 * @param args
+	 *            Los argumentos del cliente.
+	 * @throws InterruptedException
+	 *             Si hubo problemas.
 	 */
-	public static void main(String args[]) throws InterruptedException
-	{
+	public static void main(String args[]) throws InterruptedException {
 		// Adiciona la libreria como un proveedor de seguridad.
 		// Necesario para crear llaves.
-		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());		
+		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 
 		new Cliente().cliente();
 	}
@@ -117,67 +119,71 @@ public class Cliente
 	/**
 	 * Constructor de Cliente
 	 */
-	public Cliente()
-	{
-		
+	public Cliente() {
+
 	}
-	
+
 	/**
 	 * Metodo que instancia un cliente.
 	 */
 	public void cliente() {
 		Socket comunicacion;
 		SecretKey simetrica;
-			
-		try
-		{	
-			//SE CREA EL SOCKET 
-			comunicacion = new Socket( SERVIDOR, PUERTO);
 
-			//SE CREA EL ESCRITOR PARA MANDAR MENSAJES AL SERVIDOR
-			PrintWriter escritor = new PrintWriter( comunicacion.getOutputStream(), true);
+		try {
+			// SE CREA EL SOCKET
+			comunicacion = new Socket(SERVIDOR, PUERTO);
 
-			//SE CREA UN LECTOR DE CONSOLA
-			BufferedReader consola = new BufferedReader(new InputStreamReader(System.in));
+			// SE CREA EL ESCRITOR PARA MANDAR MENSAJES AL SERVIDOR
+			PrintWriter escritor = new PrintWriter(
+					comunicacion.getOutputStream(), true);
 
-			//SE CREA EL LECTOR DE MENSAJES DEL SERVIDOR
-			BufferedReader lector = new BufferedReader(new InputStreamReader(comunicacion.getInputStream()));
+			// SE CREA UN LECTOR DE CONSOLA
+			BufferedReader consola = new BufferedReader(new InputStreamReader(
+					System.in));
 
-			//INPUT STREAM PARA RECIBIR FLUJO DE BYTES DEL SERVIDOR
+			// SE CREA EL LECTOR DE MENSAJES DEL SERVIDOR
+			BufferedReader lector = new BufferedReader(new InputStreamReader(
+					comunicacion.getInputStream()));
+
+			// INPUT STREAM PARA RECIBIR FLUJO DE BYTES DEL SERVIDOR
 			InputStream input = comunicacion.getInputStream();
 
-			//OUTPUT STREAM PARA MANDAR FLUJO DE BYTES DEL SERVIDOR
+			// OUTPUT STREAM PARA MANDAR FLUJO DE BYTES DEL SERVIDOR
 			OutputStream output = comunicacion.getOutputStream();
 
-			//	Inicio del tiempo de mensaje
+			// Inicio del tiempo de mensaje
 			long inicio, autenticacion, envio, fin;
 			inicio = System.nanoTime();
-			
-			//SE ENVIA LA IDENTIFICACION CLIENTE
+
+			// SE ENVIA LA IDENTIFICACION CLIENTE
 			escritor.println("INIT");
 
-			//SE RECIBE EL STATUS DE LA ACCION ANTERIOR
+			// SE RECIBE EL STATUS DE LA ACCION ANTERIOR
 			String status = lector.readLine();
 
-			//SE ENVIA LOS ALGORITMOS A USAR
-			escritor.println("ALGORITMOS:"+ SIMETRICO + ":" + ASIMETRICO +":" + DIGEST);
+			// SE ENVIA LOS ALGORITMOS A USAR
+			escritor.println("ALGORITMOS:" + SIMETRICO + ":" + ASIMETRICO + ":"
+					+ DIGEST);
 
-			//SE RECIBE EL STATUS DE LA ACCION ANTERIOR
+			// SE RECIBE EL STATUS DE LA ACCION ANTERIOR
 			status = lector.readLine();
 
-			//SE RECIBE EL CERTIFICADO
+			// SE RECIBE EL CERTIFICADO
 			escritor.println("CERTSRV");
 
 			byte[] certificadoServidorBytes = new byte[520];
 			int numBytesLeidos = input.read(certificadoServidorBytes);
-			CertificateFactory creador = CertificateFactory.getInstance("X.509");
+			CertificateFactory creador = CertificateFactory
+					.getInstance("X.509");
 			InputStream in = new ByteArrayInputStream(certificadoServidorBytes);
-			X509Certificate certificadoServidor = (X509Certificate)creador.generateCertificate(in);
+			X509Certificate certificadoServidor = (X509Certificate) creador
+					.generateCertificate(in);
 
-			//////////////////////////////////////////////////////////////////////////
+			// ////////////////////////////////////////////////////////////////////////
 			// Envia la llave simetrica al cliente en un sobre digital.
 			// Encripta la llave con la clave publica del cliente.
-			//////////////////////////////////////////////////////////////////////////
+			// ////////////////////////////////////////////////////////////////////////
 			escritor.println("AUT");
 			status = lector.readLine();
 
@@ -187,7 +193,7 @@ public class Cliente
 
 			autenticacion = System.nanoTime();
 
-			//SE ESPERA A QUE EL USUARIO INSERTE EL ID
+			// SE ESPERA A QUE EL USUARIO INSERTE EL ID
 			String idP = "45856951";
 			if (enPrueba) {
 				System.out.println("Ingrese la tutela a confirmar:");
@@ -195,15 +201,14 @@ public class Cliente
 			}
 
 			envio = System.nanoTime();
-			
-			//SE CIFRA EL INPUT DEL USUARIO
+
+			// SE CIFRA EL INPUT DEL USUARIO
 			String idPCifrado = idP;
 
-			//SE ENVIA LA SOLICITUD
-			escritor.println("STATTUTELA:"+idPCifrado);
+			// SE ENVIA LA SOLICITUD
+			escritor.println("STATTUTELA:" + idPCifrado);
 
-
-			//SE RECIBE LA RESPUESTA DEL SERVIDOR Y SE DECIFRA
+			// SE RECIBE LA RESPUESTA DEL SERVIDOR Y SE DECIFRA
 			String consultaCifrada = lector.readLine();
 
 			consultaCifrada = consultaCifrada.substring(5);
@@ -212,37 +217,41 @@ public class Cliente
 
 			fin = System.nanoTime();
 
-			//	Archivo de Escritura
+			// Archivo de Escritura
 			Properties pc = new Properties();
 			pc.load(new FileInputStream(PROPERTIESCLIENTE));
-			
+
 			Properties ps = new Properties();
 			ps.load(new FileInputStream(PROPERTIESSERVIDOR));
-			
+
 			File f;
-			f = new File("../InfracompNoSeguridad/DatossinSeguridad_"+ps.getProperty("n_threads")+"_"+pc.getProperty("number")+"_"+pc.getProperty("times"));
+			f = new File("../InfracompNoSeguridad/DatossinSeguridad_"
+					+ ps.getProperty("n_threads") + "_" + pc.getProperty("gap")
+					+ "_" + pc.getProperty("number") + "_"
+					+ pc.getProperty("times"));
 			FileWriter w = new FileWriter(f, true);
 			BufferedWriter bw = new BufferedWriter(w);
 			PrintWriter wr = new PrintWriter(bw);
-			
-			//	Escritura
-			wr.print(( autenticacion - inicio ) +", "+ ( fin - envio )+"\n");
-//			System.out.println(( autenticacion - inicio ) +", "+ ( fin - envio ));
 
-			//SE REVISA EL MENSAJE CON EL DIGEST
-			//boolean verificacion = verificarIntegridad(generarHMAC(respuesta,simetrica) ,digest );
-			
-			//	Cierra el Archivo
+			// Escritura
+			wr.print((autenticacion - inicio) + ", " + (fin - envio) + "\n");
+			// System.out.println(( autenticacion - inicio ) +", "+ ( fin -
+			// envio ));
+
+			// SE REVISA EL MENSAJE CON EL DIGEST
+			// boolean verificacion =
+			// verificarIntegridad(generarHMAC(respuesta,simetrica) ,digest );
+
+			// Cierra el Archivo
 			wr.close();
 			bw.close();
 
-			if (enPrueba) System.out.println("RESPUESTA RECIBIDA: "+ respuesta);
+			if (enPrueba)
+				System.out.println("RESPUESTA RECIBIDA: " + respuesta);
 			escritor.println("RESULTADO:OK:FIN");
 
 			comunicacion.close();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			System.out.println("Error cliente");
 			e.printStackTrace();
 		}
