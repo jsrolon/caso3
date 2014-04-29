@@ -3,7 +3,7 @@ import re
 import subprocess
 import time
 
-tipo = './InfracompSeguridad/'
+tipo = './InfracompNoSeguridad/'
 properties = 'servidor.properties'
 jar = 'servidor.jar'
 
@@ -11,7 +11,7 @@ jar = 'servidor.jar'
 for j in range(0, 1):
 
 	# Iterar sobre el número de threads
-	for i in range(0, 1):
+	for i in range(4, 5):
 	
 		# Reemplazar la cantidad de threads para iterar
 		for line in fileinput.input(tipo + properties, inplace=True):

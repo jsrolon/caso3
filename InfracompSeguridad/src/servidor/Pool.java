@@ -25,11 +25,6 @@ public class Pool {
 	public static int n_threads;
 	
 	/**
-	 * Ubicacion del properties (debe ser relativo al Script)
-	 */
-	private static final String PROPERTIES = "./InfracompSeguridad/servidor.properties";
-	
-	/**
 	 * Puerto en el cual escucha el servidor.
 	 */
 	public static final int PUERTO = 5555;
@@ -53,9 +48,7 @@ public class Pool {
 		Semaphore semaphore = new Semaphore(1);
 		
 		// Obtiene la cantidad de threads del archivo properties
-		Properties p = new Properties();
-		p.load(new FileInputStream(PROPERTIES));
-		n_threads = Integer.parseInt(p.getProperty("n_threads"));
+		n_threads = Integer.parseInt(args[0]);
 		
 		// Genera n threads que correran durante la sesion.
 		ThreadServidor [] threads = new ThreadServidor[n_threads];
