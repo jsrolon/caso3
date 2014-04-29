@@ -26,7 +26,7 @@ for j in range(0, 1):
 
 		# Llamar al proceso remoto que inicia GLoad y luego copiar sus resultados
 		# debe ser sincrono
-		subprocess.call(['ssh', 'rlbstr@192.168.1.146', 'python3 caso3/cliente.py'])
+		serverProcess.wait()
 			
 		# Apagar servidor y agrupar resultados de la prueba
 		serverProcess.terminate()
