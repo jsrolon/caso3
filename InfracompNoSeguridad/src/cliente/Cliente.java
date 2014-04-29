@@ -83,7 +83,7 @@ public class Cliente {
 	/**
 	 * URL de la maquina a la que se va a conectar.
 	 */
-	public static final String SERVIDOR = "localhost";
+	public static String servidor;
 
 	/**
 	 * Ubicacion del properties (debe ser relativo al Script)
@@ -131,8 +131,13 @@ public class Cliente {
 		SecretKey simetrica;
 
 		try {
+			Properties pc = new Properties();
+			pc.load(new FileInputStream(PROPERTIESCLIENTE));
+			
+			servidor = pc.getProperty("ip");
+			
 			// SE CREA EL SOCKET
-			comunicacion = new Socket(SERVIDOR, PUERTO);
+			comunicacion = new Socket(servidor, PUERTO);
 
 			// SE CREA EL ESCRITOR PARA MANDAR MENSAJES AL SERVIDOR
 			PrintWriter escritor = new PrintWriter(
@@ -218,8 +223,6 @@ public class Cliente {
 			fin = System.nanoTime();
 
 			// Archivo de Escritura
-			Properties pc = new Properties();
-			pc.load(new FileInputStream(PROPERTIESCLIENTE));
 
 			Properties ps = new Properties();
 			ps.load(new FileInputStream(PROPERTIESSERVIDOR));
