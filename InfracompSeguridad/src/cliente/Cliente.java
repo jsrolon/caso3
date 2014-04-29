@@ -88,12 +88,12 @@ public class Cliente {
 	/**
 	 * Ubicacion del properties (debe ser relativo al Script)
 	 */
-	private static final String PROPERTIESCLIENTE = "../InfracompSeguridad/cliente.properties";
+	private static final String PROPERTIESCLIENTE = "/home/rlbstr/caso3/InfracompSeguridad/cliente.properties";
 
 	/**
 	 * Ubicacion del properties (debe ser relativo al Script)
 	 */
-	private static final String PROPERTIESSERVIDOR = "../InfracompSeguridad/servidor.properties";
+	private static final String PROPERTIESSERVIDOR = "/home/rlbstr/caso3/InfracompSeguridad/servidor.properties";
 
 	/**
 	 * Pide parametros de consola e imprime sobre la consola.
@@ -248,7 +248,7 @@ public class Cliente {
 			ps.load(new FileInputStream(PROPERTIESSERVIDOR));
 
 			File f;
-			f = new File("../InfracompSeguridad/DatosconSeguridad_"
+			f = new File("/home/rlbstr/caso3/InfracompSeguridad/DatosconSeguridad_"
 					+ ps.getProperty("n_threads") + "_" + pc.getProperty("gap")
 					+ "_" + pc.getProperty("number") + "_"
 					+ pc.getProperty("times"));
