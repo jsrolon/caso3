@@ -2,7 +2,7 @@ import fileinput
 import subprocess
 import re
 
-tipo = './InfracompNoSeguridad/'
+tipo = '/home/rlbstr/caso3/InfracompNoSeguridad/'
 properties = 'cliente.properties'
 jar = 'cliente.jar'
 
