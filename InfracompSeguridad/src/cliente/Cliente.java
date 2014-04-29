@@ -248,7 +248,7 @@ public class Cliente {
 			ps.load(new FileInputStream(PROPERTIESSERVIDOR));
 
 			File f;
-			f = new File("/home/rlbstr/caso3/InfracompSeguridad/DatosconSeguridad_"
+			f = new File("DatosconSeguridad_"
 					+ ps.getProperty("n_threads") + "_" + pc.getProperty("gap")
 					+ "_" + pc.getProperty("number") + "_"
 					+ pc.getProperty("times"));
