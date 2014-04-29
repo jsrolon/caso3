@@ -88,12 +88,12 @@ public class Cliente {
 	/**
 	 * Ubicacion del properties (debe ser relativo al Script)
 	 */
-	private static final String PROPERTIESCLIENTE = "/home/rlbstr/caso3/InfracompSeguridad/cliente.properties";
+	private static final String PROPERTIESCLIENTE = "./InfracompSeguridad/cliente.properties";
 
 	/**
 	 * Ubicacion del properties (debe ser relativo al Script)
 	 */
-	private static final String PROPERTIESSERVIDOR = "/home/rlbstr/caso3/InfracompSeguridad/servidor.properties";
+	private static final String PROPERTIESSERVIDOR = "./InfracompSeguridad/servidor.properties";
 
 	/**
 	 * Pide parametros de consola e imprime sobre la consola.
