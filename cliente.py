@@ -12,7 +12,7 @@ jarServidor = 'servidor.jar'
 for i in range(0, 5):
 
 	numthreads = 2 ** i
-	serverProcess = subprocess.Popen(['ssh', 'rlbstr@192.168.1.146', 'java -jar caso3/' + tipo + jarServidor + ' {}'.format(numthreads)])
+	serverProcess = subprocess.Popen(['ssh', 'jsrolon@192.168.1.129', 'java -jar caso3/' + tipo + jarServidor + ' {}'.format(numthreads)])
 
 	time.sleep(1)
 
