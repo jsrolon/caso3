@@ -47,7 +47,7 @@ public class Pool {
 		// Crea un semaforo que da turnos para usar el socket.
 		Semaphore semaphore = new Semaphore(1);
 		
-		// Obtiene la cantidad de threads del archivo properties
+		// Obtiene la cantidad de threads de parametros
 		n_threads = Integer.parseInt(args[0]);
 		
 		// Genera n threads que correran durante la sesion.
