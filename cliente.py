@@ -3,13 +3,13 @@ import subprocess
 import re
 import time
 
-tipo = 'InfracompSeguridad/'
+tipo = 'InfracompNoSeguridad/'
 properties = 'cliente.properties'
 propertiesServidor = 'servidor.properties'
 jarCliente = 'cliente.jar'
 jarServidor = 'servidor.jar'
 
-for i in range(0, 5):
+for i in (2, 8):
 
 	numthreads = 2 ** i
 	serverProcess = subprocess.Popen(['ssh', 'jsrolon@192.168.1.129', 'java -jar caso3/' + tipo + jarServidor + ' {}'.format(numthreads)])
@@ -20,7 +20,7 @@ for i in range(0, 5):
 		print(re.sub('[0-9]+$', '{}'.format(numthreads), line), end='')
 
 	# casos
-	for repeticiones in range(0,10):
+	for repeticiones in range(0,2):
 		for line in fileinput.input(tipo + properties, inplace=True):
 			if 'gap=' in line:
 				print(re.sub('(gap=)[0-9]+$', 'gap={}'.format(20), line), end='')
