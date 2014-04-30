@@ -53,9 +53,7 @@ public class Pool {
 		Semaphore semaphore = new Semaphore(1);
 
 		// Obtiene la cantidad de threads del archivo properties
-		Properties p = new Properties();
-		p.load(new FileInputStream(PROPERTIES));
-		n_threads = Integer.parseInt(p.getProperty("n_threads"));
+		n_threads = Integer.parseInt(args[0]);
 
 		// Genera n threads que correran durante la sesion.
 		ThreadServidor[] threads = new ThreadServidor[n_threads];
